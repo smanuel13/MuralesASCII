@@ -6,7 +6,8 @@ package main;
 
 /**
  *
- * @author victo
+ * Juan Pablo Doncel 320505
+ * Victor Silva 
  */
 public class Main {
     
