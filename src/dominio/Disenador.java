@@ -5,59 +5,59 @@
 package dominio;
 
 /*
-*Juan Pablo Doncel 320505
-*Victor Silva
+* Juan Pablo Doncel 320505
+* Victor Silva 55555
 */
 
 import java.util.ArrayList;
 
 public class Disenador {
     
-    private String Nombre;
-    private String Direccion;
-    private String Mail;
+    private String nombre;
+    private String direccion;
+    private String mail;
     private ArrayList<Mural> listaMurales;
 
     public Disenador() {
-        this.Nombre = Nombre;
-        this.Direccion = Direccion;
-        this.Mail = Mail;
+        this.nombre = "Sin nombre";
+        this.direccion = "Sin direccion";
+        this.mail = "sin mail";
         this.listaMurales = new ArrayList<>();
     }
     
     
 
     public Disenador(String unNombre, String unaDireccion, String unMail) {
-        this.Nombre = unNombre;
-        this.Direccion = unaDireccion;
-        this.Mail = unMail;
+        this.nombre = unNombre;
+        this.direccion = unaDireccion;
+        this.mail = unMail;
         this.listaMurales = new ArrayList<>();
         
         
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDireccion() {
-        return Direccion;
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getMail() {
-        return Mail;
+        return mail;
     }
 
-    public void setNombre(String unNombre) {
-        this.Nombre = unNombre;
-    }
-
-    public void setDireccion(String unaDireccion) {
-        this.Direccion = unaDireccion;
-    }
-
-    public void setMail(String unMail) {
-        this.Mail = unMail;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public ArrayList<Mural> getListaMurales() {
@@ -67,7 +67,16 @@ public class Disenador {
     public void setListaMurales(ArrayList<Mural> listaMurales) {
         this.listaMurales = listaMurales;
     }
-    
+
+    @Override
+    public String toString() {
+        return this.getNombre()+ " ("+ this.getMail() + ")"; 
+    }
+
     
     
 }
+    
+    
+    
+

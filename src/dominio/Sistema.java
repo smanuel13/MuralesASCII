@@ -6,7 +6,8 @@ package dominio;
 
 /**
  *
- * @author victo
+ * Juan Pablo Doncel 320505
+ * Victor Silva
  */
 public class Sistema {
     
