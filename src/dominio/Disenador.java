@@ -16,7 +16,7 @@ public class Disenador {
     private String nombre;
     private String direccion;
     private String mail;
-    private ArrayList<Mural> listaMurales;
+    private ArrayList<Mural> listaMurales;      
 
     public Disenador() {
         this.nombre = "Sin nombre";
