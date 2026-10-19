@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package main;
+
 import dominio.Sistema;
 import dominio.Disenador;
 import dominio.Ficha;
@@ -10,11 +11,8 @@ import java.util.Scanner;
 
 /**
  *
- * Juan Pablo Doncel 320505
- * Victor Silva 344919
+ * Juan Pablo Doncel 320505 Victor Silva 344919
  */
-
-
 public class Main {
 
     public static void main(String[] args) {
@@ -92,8 +90,42 @@ public class Main {
                 } else {
                     System.out.println("No se pudo registrar la ficha");
                 }
+            } else if (opcion == 4) {
 
-            } else if (opcion >= 4 && opcion <= 9) {
+                System.out.println("Ingrese el nombre del mural:");
+                String nombreMural = input.nextLine();
+
+                if (nombreMural.equals("") || sistema.existeMural(nombreMural)) {
+                    System.out.println("Nombre de mural inválido o repetido.");
+                } else {
+
+                    System.out.println("Ingrese el nombre del diseñador:");
+                    String nombreDisenador = input.nextLine();
+
+                    Disenador unDisenador = sistema.buscarDisenador(nombreDisenador);
+
+                    if (unDisenador == null) {
+                        System.out.println("El diseñador no existe.");
+                    } else {
+                        System.out.println("Diseñador seleccionado: "
+                                + unDisenador.getNombre());
+
+                        System.out.println("Ingrese el nombre de la primera ficha:");
+                        String nombreFicha1 = input.nextLine();
+
+                        Ficha unaFichaInicial1 = sistema.buscarFicha(nombreFicha1);
+
+                        if (unaFichaInicial1 == null) {
+                            System.out.println("La ficha no existe.");
+                        } else {
+                            System.out.println("Primera ficha seleccionada: "
+                                    + unaFichaInicial1.getNombre());
+                        }
+                    }
+
+                }
+
+            } else if (opcion >= 5 && opcion <= 9) {
 
                 System.out.println("pendiente");
 
@@ -104,6 +136,3 @@ public class Main {
         }
     }
 }
-
-
-    

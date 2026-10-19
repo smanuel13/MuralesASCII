@@ -3,15 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dominio;
+
 import java.util.ArrayList;
 
 /**
  *
- * Juan Pablo Doncel 320505
- * Victor Silva 344919
+ * Juan Pablo Doncel 320505 Victor Silva 344919
  */
 public class Sistema {
-  
 
     private ArrayList<Disenador> listaDisenadores;
     private ArrayList<Ficha> listaFichas;
@@ -21,113 +20,197 @@ public class Sistema {
         this.listaDisenadores = new ArrayList<>();
         this.listaFichas = new ArrayList<>();
         this.listaMurales = new ArrayList<>();
+
+        precargarFichas();
+    }
+
+    public void precargarFichas() {
+
+        Ficha unaFicha = new Ficha("VACIA", "B",
+                ".........",
+                ".........................");
+
+        registrarFicha(unaFicha);
+
+        unaFicha = new Ficha("SOL", "M",
+                "\\|/-*-/|\\",
+                "..|...\\|/.--*--./|\\...|..");
+
+        registrarFicha(unaFicha);
+
+        unaFicha = new Ficha("CUADRADO", "N",
+                "+-+|.|+-+",
+                "+---+|...||...||...|+---+");
+
+        registrarFicha(unaFicha);
+
+        unaFicha = new Ficha("CORAZON", "R",
+                "*.****.*.",
+                "**.************.***...*..");
+
+        registrarFicha(unaFicha);
+
+        unaFicha = new Ficha("COPA", "C",
+                "\\./.|./_\\",
+                "\\.../.\\./...|....|.../_\\.");
+
+        registrarFicha(unaFicha);
+
+        unaFicha = new Ficha("ARBOL", "V",
+                ".^.^^^.|.",
+                "..^...^^^.^^^^^..|.../.\\.");
+
+        registrarFicha(unaFicha);
+
+        unaFicha = new Ficha("GATO", "A",
+                "^.^o.o=^=",
+                "/\\_/\\(o.o).>^<../|\\../.\\.");
+
+        registrarFicha(unaFicha);
+
+        unaFicha = new Ficha("DIAMANTE", "G",
+                ".*.*.*.*.",
+                "..*...*.*.*...*.*.*...*..");
+
+        registrarFicha(unaFicha);
+
     }
 
     public boolean existeDisenador(String nombre) {
 
-    boolean encontrado = false;
+        boolean encontrado = false;
 
-    for (int i = 0; i < listaDisenadores.size(); i++) {
+        for (int i = 0; i < listaDisenadores.size(); i++) {
 
-        if (listaDisenadores.get(i).getNombre().equals(nombre)) {
-            encontrado = true;
+            if (listaDisenadores.get(i).getNombre().equals(nombre)) {
+                encontrado = true;
+            }
         }
+
+        return encontrado;
     }
 
-    return encontrado;
-}
+    public Disenador buscarDisenador(String unNombre) {
+
+        Disenador unDisenador = null;
+
+        for (int i = 0; i < listaDisenadores.size(); i++) {
+
+            if (listaDisenadores.get(i).getNombre().equals(unNombre)) {
+                unDisenador = listaDisenadores.get(i);
+            }
+        }
+
+        return unDisenador;
+    }
+
     public boolean existeMural(String nombre) {
 
-    boolean encontrado = false;
+        boolean encontrado = false;
 
-    for (int i = 0; i < listaMurales.size(); i++) {
+        for (int i = 0; i < listaMurales.size(); i++) {
 
-        Mural unMural = listaMurales.get(i);
+            Mural unMural = listaMurales.get(i);
 
-        if (unMural.getNombre().equals(nombre)) {
-            encontrado = true;
+            if (unMural.getNombre().equals(nombre)) {
+                encontrado = true;
+            }
         }
+
+        return encontrado;
     }
 
-    return encontrado;
-}
     public boolean registrarMural(Mural unMural) {
 
-    boolean agregado = false;
+        boolean agregado = false;
 
-    if (!existeMural(unMural.getNombre()) &&
-        unMural.getDisenador() != null &&
-        listaDisenadores.contains(unMural.getDisenador())) {
+        if (!existeMural(unMural.getNombre())
+                && unMural.getDisenador() != null
+                && listaDisenadores.contains(unMural.getDisenador())) {
 
-        listaMurales.add(unMural);
-        agregado = true;
+            listaMurales.add(unMural);
+            agregado = true;
+        }
+
+        return agregado;
     }
 
-    return agregado;
-}
-public boolean registrarDisenador(Disenador unDisenador) {
+    public boolean registrarDisenador(Disenador unDisenador) {
 
-    boolean agregado = false;
+        boolean agregado = false;
 
-    if (!existeDisenador(unDisenador.getNombre())) {
-        listaDisenadores.add(unDisenador);
-        agregado = true;
+        if (!existeDisenador(unDisenador.getNombre())) {
+            listaDisenadores.add(unDisenador);
+            agregado = true;
+        }
+
+        return agregado;
     }
 
-    return agregado;
-}
-
-    
     public boolean existeFicha(String nombre) {
 
-    boolean encontrado = false;
+        boolean encontrado = false;
 
-    for (int i = 0; i < listaFichas.size(); i++) {
+        for (int i = 0; i < listaFichas.size(); i++) {
 
-        if (listaFichas.get(i).getNombre().equals(nombre)) {
-            encontrado = true;
+            if (listaFichas.get(i).getNombre().equals(nombre)) {
+                encontrado = true;
+            }
         }
+
+        return encontrado;
     }
 
-    return encontrado;
-}
-    
+    public Ficha buscarFicha(String unNombre) {
+
+        Ficha unaFicha = null;
+
+        for (int i = 0; i < listaFichas.size(); i++) {
+
+            if (listaFichas.get(i).getNombre().equals(unNombre)) {
+                unaFicha = listaFichas.get(i);
+            }
+        }
+
+        return unaFicha;
+    }
+
     public boolean colorValido(String color) {
 
-    boolean valido = false;
+        boolean valido = false;
 
-    if (color.equals("R") || color.equals("A") ||
-        color.equals("B") || color.equals("N") ||
-        color.equals("M") || color.equals("V") ||
-        color.equals("G") || color.equals("C")) {
+        if (color.equals("R") || color.equals("A")
+                || color.equals("B") || color.equals("N")
+                || color.equals("M") || color.equals("V")
+                || color.equals("G") || color.equals("C")) {
 
-        valido = true;
+            valido = true;
+        }
+
+        return valido;
     }
 
-    return valido;
-}
     public boolean registrarFicha(Ficha unaFicha) {
 
-    boolean agregado = false;
+        boolean agregado = false;
 
-    if (!existeFicha(unaFicha.getNombre())) {
+        if (!existeFicha(unaFicha.getNombre())) {
 
-        if (colorValido(unaFicha.getColor())) {
+            if (colorValido(unaFicha.getColor())) {
 
-            if (unaFicha.getDisenoChico().length() == 9 &&
-                unaFicha.getDisenoGrande().length() == 25) {
+                if (unaFicha.getDisenoChico().length() == 9
+                        && unaFicha.getDisenoGrande().length() == 25) {
 
-                if (!unaFicha.getNombre().equals("") &&
-                    unaFicha.getNombre().equals(unaFicha.getNombre().toUpperCase())) {
+                    if (!unaFicha.getNombre().equals("")
+                            && unaFicha.getNombre().equals(unaFicha.getNombre().toUpperCase())) {
 
-                    listaFichas.add(unaFicha);
-                    agregado = true;
+                        listaFichas.add(unaFicha);
+                        agregado = true;
+                    }
                 }
             }
         }
+
+        return agregado;
     }
-
-    return agregado;
 }
-}
-

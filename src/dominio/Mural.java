@@ -10,12 +10,12 @@ package dominio;
  */
 public class Mural {
 
-    //el final es para que no pueda cambiar el valor
     public static final int FILAS = 10;
     public static final int COLUMNAS = 12;
     private String formato;
     private String nombre;
     private Ficha[][] matrizFichas;
+    private Ficha[][] matrizOriginal;
     private Ficha fichaInicial1;
     private Ficha fichaInicial2;
     private Disenador disenador;
@@ -29,16 +29,23 @@ public class Mural {
         this.matrizFichas = new Ficha[FILAS][COLUMNAS];
     }
 
-    public Mural(String unFormato, String unNombre, Ficha[][] matrizFichas, Ficha f1, Ficha f2, Disenador unDisenador) {
-        this.formato = (unFormato);
-        this.nombre = (unNombre);
-        this.matrizFichas = matrizFichas;
-        this.fichaInicial1 = f1;
-        this.fichaInicial2 = f2;
-        this.disenador = (unDisenador);
+    public Mural(String unFormato, String unNombre,
+            Ficha unaFichaInicial1, Ficha unaFichaInicial2,
+            Disenador unDisenador, Ficha unaFichaVacia) {
 
-        //iniciar matriz con el formato que se elija
-        this.restaurar();
+        this.formato = unFormato;
+        this.nombre = unNombre;
+        this.fichaInicial1 = unaFichaInicial1;
+        this.fichaInicial2 = unaFichaInicial2;
+        this.disenador = unDisenador;
+        this.matrizFichas = new Ficha[FILAS][COLUMNAS];
+
+        if (this.formato.equalsIgnoreCase("M")) {
+            this.llenarVacio(unaFichaVacia);
+        } else {
+            this.generarDistribucionInicial();
+            this.guardarOriginal();
+        }
     }
 
     public String getFormato() {
@@ -89,13 +96,37 @@ public class Mural {
         this.disenador = disenador;
     }
 
-    //cambia ficha de posición 
     public void cambiarPosicion(int fila, int col, Ficha f) {
         if (fila >= 1 && fila <= FILAS && col >= 1 && col <= COLUMNAS) {
             this.matrizFichas[fila - 1][col - 1] = f;
         }
     }
-    // modificarficha
+
+    public void llenarVacio(Ficha unaFichaVacia) {
+
+        for (int i = 0; i < FILAS; i++) {
+
+            for (int j = 0; j < COLUMNAS; j++) {
+
+                matrizFichas[i][j] = unaFichaVacia;
+
+            }
+        }
+    }
+
+    public void guardarOriginal() {
+
+        matrizOriginal = new Ficha[FILAS][COLUMNAS];
+
+        for (int i = 0; i < FILAS; i++) {
+
+            for (int j = 0; j < COLUMNAS; j++) {
+
+                matrizOriginal[i][j] = matrizFichas[i][j];
+
+            }
+        }
+    }
 
     public void reemplazarFicha(Ficha fOriginal, Ficha fNueva) {
 
@@ -108,8 +139,22 @@ public class Mural {
         }
     }
 
-    //restaurar el patron inical del mural
     public void restaurar() {
+
+        if (matrizOriginal != null) {
+
+            for (int i = 0; i < FILAS; i++) {
+
+                for (int j = 0; j < COLUMNAS; j++) {
+
+                    matrizFichas[i][j] = matrizOriginal[i][j];
+
+                }
+            }
+        }
+    }
+
+    public void generarDistribucionInicial() {
         String formt = this.getFormato().toUpperCase();
 
         for (int i = 0; i < FILAS; i++) {
@@ -155,5 +200,3 @@ public class Mural {
         return res;
     }
 }
-    
-
