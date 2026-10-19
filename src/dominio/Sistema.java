@@ -11,14 +11,16 @@ import java.util.ArrayList;
  * Victor Silva 344919
  */
 public class Sistema {
-   
+  
 
     private ArrayList<Disenador> listaDisenadores;
     private ArrayList<Ficha> listaFichas;
+    private ArrayList<Mural> listaMurales;
 
     public Sistema() {
         this.listaDisenadores = new ArrayList<>();
         this.listaFichas = new ArrayList<>();
+        this.listaMurales = new ArrayList<>();
     }
 
     public boolean existeDisenador(String nombre) {
@@ -34,8 +36,35 @@ public class Sistema {
 
     return encontrado;
 }
-    
-    
+    public boolean existeMural(String nombre) {
+
+    boolean encontrado = false;
+
+    for (int i = 0; i < listaMurales.size(); i++) {
+
+        Mural unMural = listaMurales.get(i);
+
+        if (unMural.getNombre().equals(nombre)) {
+            encontrado = true;
+        }
+    }
+
+    return encontrado;
+}
+    public boolean registrarMural(Mural unMural) {
+
+    boolean agregado = false;
+
+    if (!existeMural(unMural.getNombre()) &&
+        unMural.getDisenador() != null &&
+        listaDisenadores.contains(unMural.getDisenador())) {
+
+        listaMurales.add(unMural);
+        agregado = true;
+    }
+
+    return agregado;
+}
 public boolean registrarDisenador(Disenador unDisenador) {
 
     boolean agregado = false;

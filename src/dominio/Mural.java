@@ -6,7 +6,7 @@ package dominio;
 
 /*
 * Juan Pablo Doncel 320505
-* Vuctor Silva 55555
+* Victor Silva 344919
  */
 public class Mural {
 

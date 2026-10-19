@@ -7,7 +7,7 @@ package dominio;
 /**
  *
  * Juan Pablo Doncel 320505
- * Victor Silva 55555
+ * Victor Silva 344919
  */
 public class Ficha {
     
