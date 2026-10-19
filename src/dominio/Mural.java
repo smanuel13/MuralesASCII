@@ -4,6 +4,8 @@
  */
 package dominio;
 
+import java.util.ArrayList;
+
 /*
 * Juan Pablo Doncel 320505
 * Victor Silva 344919
@@ -139,6 +141,25 @@ public class Mural {
         }
     }
 
+    public ArrayList<Ficha> obtenerFichasUsadas() {
+
+        ArrayList<Ficha> fichasUsadas = new ArrayList<>();
+
+        for (int i = 0; i < FILAS; i++) {
+
+            for (int j = 0; j < COLUMNAS; j++) {
+
+                Ficha unaFicha = matrizFichas[i][j];
+
+                if (unaFicha != null && !fichasUsadas.contains(unaFicha)) {
+                    fichasUsadas.add(unaFicha);
+                }
+            }
+        }
+
+        return fichasUsadas;
+    }
+
     public void restaurar() {
 
         if (matrizOriginal != null) {
@@ -152,6 +173,93 @@ public class Mural {
                 }
             }
         }
+    }
+
+    public void mostrarChico() {
+
+        for (int i = 0; i < FILAS; i++) {
+
+            for (int k = 0; k < 3; k++) {
+
+                for (int j = 0; j < COLUMNAS; j++) {
+
+                    System.out.print(obtenerColor(matrizFichas[i][j]));
+
+                    String diseno = matrizFichas[i][j].getDisenoChico();
+
+                    for (int l = 0; l < 3; l++) {
+
+                        char caracter = diseno.charAt(k * 3 + l);
+
+                        if (caracter == '.') {
+                            System.out.print(" ");
+                        } else {
+                            System.out.print(caracter);
+                        }
+                    }
+
+                    System.out.print("\u001B[0m");
+                }
+
+                System.out.println();
+            }
+        }
+    }
+
+    public void mostrarGrande() {
+
+        for (int i = 0; i < FILAS; i++) {
+
+            for (int k = 0; k < 5; k++) {
+
+                for (int j = 0; j < COLUMNAS; j++) {
+
+                    System.out.print(obtenerColor(matrizFichas[i][j]));
+
+                    String diseno = matrizFichas[i][j].getDisenoGrande();
+
+                    for (int l = 0; l < 5; l++) {
+
+                        char caracter = diseno.charAt(k * 5 + l);
+
+                        if (caracter == '.') {
+                            System.out.print(" ");
+                        } else {
+                            System.out.print(caracter);
+                        }
+                    }
+
+                    System.out.print("\u001B[0m");
+                }
+
+                System.out.println();
+            }
+        }
+    }
+
+    public String obtenerColor(Ficha unaFicha) {
+
+        String codigo = "";
+
+        if (unaFicha.getColor().equals("R")) {
+            codigo = "\u001B[31m";
+        } else if (unaFicha.getColor().equals("A")) {
+            codigo = "\u001B[34m";
+        } else if (unaFicha.getColor().equals("B")) {
+            codigo = "\u001B[37m";
+        } else if (unaFicha.getColor().equals("N")) {
+            codigo = "\u001B[30m";
+        } else if (unaFicha.getColor().equals("M")) {
+            codigo = "\u001B[33m";
+        } else if (unaFicha.getColor().equals("V")) {
+            codigo = "\u001B[32m";
+        } else if (unaFicha.getColor().equals("G")) {
+            codigo = "\u001B[35m";
+        } else if (unaFicha.getColor().equals("C")) {
+            codigo = "\u001B[36m";
+        }
+
+        return codigo;
     }
 
     public void generarDistribucionInicial() {

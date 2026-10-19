@@ -120,6 +120,113 @@ public class Sistema {
         return encontrado;
     }
 
+    public Mural buscarMural(String unNombre) {
+
+        Mural unMural = null;
+
+        for (int i = 0; i < listaMurales.size(); i++) {
+
+            if (listaMurales.get(i).getNombre().equals(unNombre)) {
+                unMural = listaMurales.get(i);
+            }
+        }
+
+        return unMural;
+    }
+
+    public void mostrarMurales() {
+
+        for (int i = 0; i < listaMurales.size(); i++) {
+
+            Mural unMural = listaMurales.get(i);
+
+            System.out.println(unMural.getNombre()
+                    + " - Diseñador: "
+                    + unMural.getDisenador().getNombre());
+        }
+    }
+
+    public void mostrarDisenadores() {
+
+        for (int i = 0; i < listaDisenadores.size(); i++) {
+            System.out.println(listaDisenadores.get(i).getNombre());
+        }
+    }
+
+    public void mostrarMuralesDe(Disenador unDisenador) {
+
+        for (int i = 0; i < listaMurales.size(); i++) {
+
+            Mural unMural = listaMurales.get(i);
+
+            if (unMural.getDisenador() == unDisenador) {
+                System.out.println(unMural.getNombre());
+            }
+        }
+    }
+
+    public void mostrarTodasLasFichas() {
+
+        for (int i = 0; i < listaFichas.size(); i++) {
+
+            Ficha unaFicha = listaFichas.get(i);
+
+            System.out.println("Ficha: " + unaFicha.getNombre());
+            System.out.println("Color: " + unaFicha.getColor());
+
+            String codigo = "";
+
+            if (unaFicha.getColor().equals("R")) {
+                codigo = "\u001B[31m";
+            } else if (unaFicha.getColor().equals("A")) {
+                codigo = "\u001B[34m";
+            } else if (unaFicha.getColor().equals("B")) {
+                codigo = "\u001B[37m";
+            } else if (unaFicha.getColor().equals("N")) {
+                codigo = "\u001B[30m";
+            } else if (unaFicha.getColor().equals("M")) {
+                codigo = "\u001B[33m";
+            } else if (unaFicha.getColor().equals("V")) {
+                codigo = "\u001B[32m";
+            } else if (unaFicha.getColor().equals("G")) {
+                codigo = "\u001B[35m";
+            } else if (unaFicha.getColor().equals("C")) {
+                codigo = "\u001B[36m";
+            }
+
+            for (int tam = 3; tam <= 5; tam = tam + 2) {
+
+                String diseno = unaFicha.getDisenoChico();
+
+                if (tam == 5) {
+                    diseno = unaFicha.getDisenoGrande();
+                }
+
+                System.out.println("Tamaño " + tam + "x" + tam + ":");
+
+                for (int fila = 0; fila < tam; fila++) {
+
+                    System.out.print(codigo);
+
+                    for (int columna = 0; columna < tam; columna++) {
+
+                        char caracter = diseno.charAt(fila * tam + columna);
+
+                        if (caracter == '.') {
+                            System.out.print(" ");
+                        } else {
+                            System.out.print(caracter);
+                        }
+                    }
+
+                    System.out.println("\u001B[0m");
+                }
+            }
+
+            System.out.println();
+        }
+    }
+
     public boolean registrarMural(Mural unMural) {
 
         boolean agregado = false;
@@ -147,6 +254,72 @@ public class Sistema {
         return agregado;
     }
 
+    public void listadoDisenadores() {
+
+        ArrayList<Disenador> pendientes = new ArrayList<>();
+
+        for (int i = 0; i < listaDisenadores.size(); i++) {
+            pendientes.add(listaDisenadores.get(i));
+        }
+
+        while (pendientes.size() > 0) {
+
+            Disenador actual = pendientes.get(0);
+
+            for (int i = 1; i < pendientes.size(); i++) {
+                if (pendientes.get(i).getNombre().compareTo(
+                        actual.getNombre()) < 0) {
+                    actual = pendientes.get(i);
+                }
+            }
+
+            int cantidadMurales = 0;
+            ArrayList<Ficha> fichasUsadas = new ArrayList<>();
+            ArrayList<String> coloresUsados = new ArrayList<>();
+
+            for (int i = 0; i < listaMurales.size(); i++) {
+
+                Mural unMural = listaMurales.get(i);
+
+                if (unMural.getDisenador() == actual) {
+
+                    cantidadMurales++;
+
+                    Ficha[][] matriz = unMural.getMatrizFichas();
+
+                    for (int f = 0; f < Mural.FILAS; f++) {
+                        for (int c = 0; c < Mural.COLUMNAS; c++) {
+
+                            Ficha unaFicha = matriz[f][c];
+
+                            if (unaFicha != null) {
+
+                                if (!fichasUsadas.contains(unaFicha)) {
+                                    fichasUsadas.add(unaFicha);
+                                }
+
+                                if (!coloresUsados.contains(
+                                        unaFicha.getColor())) {
+                                    coloresUsados.add(unaFicha.getColor());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            System.out.println("Nombre: " + actual.getNombre());
+            System.out.println("Direccion: " + actual.getDireccion());
+            System.out.println("Mail: " + actual.getMail());
+            System.out.println("Murales: " + cantidadMurales);
+            System.out.println("Fichas diferentes: " + fichasUsadas.size());
+            System.out.println("Colores diferentes: " + coloresUsados.size());
+            System.out.println();
+
+            pendientes.remove(actual);
+        }
+    }
+
     public boolean existeFicha(String nombre) {
 
         boolean encontrado = false;
@@ -159,6 +332,17 @@ public class Sistema {
         }
 
         return encontrado;
+    }
+
+    public void mostrarFichas() {
+
+        for (int i = 0; i < listaFichas.size(); i++) {
+
+            Ficha unaFicha = listaFichas.get(i);
+
+            System.out.println(unaFicha.getNombre()
+                    + " - Color: " + unaFicha.getColor());
+        }
     }
 
     public Ficha buscarFicha(String unNombre) {
@@ -213,4 +397,62 @@ public class Sistema {
 
         return agregado;
     }
+
+    public void compararSimilitud(Mural original, int fila,
+            int columna, int alto, int ancho) {
+
+        boolean encontrado = false;
+
+        Ficha[][] origen = original.getMatrizFichas();
+
+        for (int m = 0; m < listaMurales.size(); m++) {
+
+            Mural otro = listaMurales.get(m);
+
+            if (otro != original) {
+
+                Ficha[][] destino = otro.getMatrizFichas();
+
+                boolean encontradoEnEste = false;
+
+                for (int i = 0; i <= Mural.FILAS - alto
+                        && !encontradoEnEste; i++) {
+
+                    for (int j = 0; j <= Mural.COLUMNAS - ancho
+                            && !encontradoEnEste; j++) {
+
+                        boolean iguales = true;
+
+                        for (int f = 0; f < alto; f++) {
+
+                            for (int c = 0; c < ancho; c++) {
+
+                                if (origen[fila - 1 + f][columna - 1 + c]
+                                        != destino[i + f][j + c]) {
+                                    iguales = false;
+                                }
+                            }
+                        }
+
+                        if (iguales) {
+
+                            System.out.println("Coincidencia en mural: "
+                                    + otro.getNombre());
+
+                            System.out.println("Fila: " + (i + 1)
+                                    + ", columna: " + (j + 1));
+
+                            encontrado = true;
+                            encontradoEnEste = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("No se encontraron coincidencias.");
+        }
+    }
+
 }
